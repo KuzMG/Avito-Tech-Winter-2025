@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Avito-Tech-Winter-2025</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="downloads_screen">Скачанные</string>
     <string name="title_notifications">Notifications</string>
 </resources>
