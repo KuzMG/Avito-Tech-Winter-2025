@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.example.avito.tech.avito_tech_winter_2025"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.avito.tech.avito_tech_winter_2025"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 

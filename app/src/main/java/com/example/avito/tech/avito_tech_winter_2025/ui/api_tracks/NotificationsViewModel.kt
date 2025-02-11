@@ -1,4 +1,4 @@
-package com.example.avito.tech.avito_tech_winter_2025.ui.notifications
+package com.example.avito.tech.avito_tech_winter_2025.ui.api_tracks
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
