@@ -17,20 +17,23 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import com.example.avito.tech.avito_tech_winter_2025.ui.downloaded_tracks.data.Track
+import com.example.avito.tech.internship.utils.appComponent
 import com.example.avito.tech.ui.RecyclerViewFragment
 import com.example.avito.tech.ui.TrackViewHolder
 import com.example.avito.tech.ui.TracksAdapter
 import com.squareup.picasso.Picasso
 
 class DownloadedTrackFragment : RecyclerViewFragment() {
-    private val viewModel by viewModels<DownloadedTracksViewModel>()
+    private val viewModel by viewModels<DownloadedTracksViewModel>(){
+        appComponent.multiViewModelFactory
+    }
     private val requestPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
             if (isGranted) {
                 binding.recyclerView.adapter =
-                    DownloadedTrackAdapter(viewModel.loadAudio(requireContext()))
+                    DownloadedTrackAdapter(viewModel.tracks)
             }
         }
 
@@ -70,7 +73,7 @@ class DownloadedTrackFragment : RecyclerViewFragment() {
             requestPermissionLauncher.launch(readImagePermission)
         } else {
             binding.recyclerView.adapter =
-                DownloadedTrackAdapter(viewModel.loadAudio(requireContext()))
+                DownloadedTrackAdapter(viewModel.tracks)
         }
     }
 
