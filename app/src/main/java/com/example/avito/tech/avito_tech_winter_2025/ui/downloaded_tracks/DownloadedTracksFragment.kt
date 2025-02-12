@@ -4,18 +4,11 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import com.example.avito.tech.avito_tech_winter_2025.ui.downloaded_tracks.data.Track
 import com.example.avito.tech.internship.utils.appComponent
 import com.example.avito.tech.ui.RecyclerViewFragment
@@ -24,7 +17,7 @@ import com.example.avito.tech.ui.TracksAdapter
 import com.squareup.picasso.Picasso
 
 class DownloadedTrackFragment : RecyclerViewFragment() {
-    private val viewModel by viewModels<DownloadedTracksViewModel>(){
+    private val viewModel by viewModels<DownloadedTracksViewModel>() {
         appComponent.multiViewModelFactory
     }
     private val requestPermissionLauncher =
@@ -32,8 +25,7 @@ class DownloadedTrackFragment : RecyclerViewFragment() {
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
             if (isGranted) {
-                binding.recyclerView.adapter =
-                    DownloadedTrackAdapter(viewModel.tracks)
+                getTracks()
             }
         }
 
@@ -46,9 +38,7 @@ class DownloadedTrackFragment : RecyclerViewFragment() {
                 }
 
                 override fun onQueryTextChange(p0: String): Boolean {
-                    if (viewModel.query != p0) {
-                        viewModel.setQuery(p0)
-                    }
+                    viewModel.query = p0
                     return true
                 }
             })
@@ -59,6 +49,13 @@ class DownloadedTrackFragment : RecyclerViewFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         checkPermission()
+    }
+
+    private fun getTracks() {
+        viewModel.tracksLiveData.observe(viewLifecycleOwner) {
+            binding.recyclerView.adapter =
+                DownloadedTrackAdapter(it)
+        }
     }
 
     private fun checkPermission() {
@@ -72,8 +69,7 @@ class DownloadedTrackFragment : RecyclerViewFragment() {
         ) {
             requestPermissionLauncher.launch(readImagePermission)
         } else {
-            binding.recyclerView.adapter =
-                DownloadedTrackAdapter(viewModel.tracks)
+            getTracks()
         }
     }
 
