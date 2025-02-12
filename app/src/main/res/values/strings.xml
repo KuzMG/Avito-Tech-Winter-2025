@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Avito-Tech-Winter-2025</string>
     <string name="downloads_screen">Скачанные</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="api_screen">API</string>
 </resources>

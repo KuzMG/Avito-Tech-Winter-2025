@@ -3,18 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_dashboard">
+    app:startDestination="@+id/navigation_downloaded">
 
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.avito.tech.avito_tech_winter_2025.ui.downloaded_tracks.DownloadedTrackFragment"
+        android:id="@+id/navigation_downloaded"
+        android:name="com.example.avito.tech.avito_tech_winter_2025.ui.downloaded_tracks.DownloadedTracksFragment"
         tools:layout="@layout/fragment_recycler_view"
         android:label="@string/downloads_screen" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.avito.tech.avito_tech_winter_2025.ui.api_tracks.NotificationsFragment"
-        android:label="@string/title_notifications"
+        android:id="@+id/navigation_api"
+        android:name="com.example.avito.tech.avito_tech_winter_2025.ui.api_tracks.APITracksFragment"
+        android:label="@string/api_screen"
         tools:layout="@layout/fragment_recycler_view" />
 </navigation>

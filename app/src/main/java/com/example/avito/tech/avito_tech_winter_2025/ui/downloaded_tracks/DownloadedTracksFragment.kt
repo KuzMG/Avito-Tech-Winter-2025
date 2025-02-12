@@ -1,5 +1,6 @@
 package com.example.avito.tech.avito_tech_winter_2025.ui.downloaded_tracks
 
+
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
@@ -16,7 +17,7 @@ import com.example.avito.tech.ui.TrackViewHolder
 import com.example.avito.tech.ui.TracksAdapter
 import com.squareup.picasso.Picasso
 
-class DownloadedTrackFragment : RecyclerViewFragment() {
+class DownloadedTracksFragment : RecyclerViewFragment() {
     private val viewModel by viewModels<DownloadedTracksViewModel>() {
         appComponent.multiViewModelFactory
     }
@@ -74,7 +75,7 @@ class DownloadedTrackFragment : RecyclerViewFragment() {
     }
 
 
-    inner class DownloadedTrackAdapter(private val tracks: List<Track>) :
+    class DownloadedTrackAdapter(private val tracks: List<Track>) :
         TracksAdapter<Track>(tracks) {
         override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
             super.onBindViewHolder(holder, position)
