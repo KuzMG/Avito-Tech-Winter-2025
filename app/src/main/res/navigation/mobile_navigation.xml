@@ -14,7 +14,7 @@
 
     <fragment
         android:id="@+id/navigation_api"
-        android:name="com.example.avito.tech.avito_tech_winter_2025.ui.api_tracks.APITracksFragment"
+        android:name="com.example.avito.tech.avito_tech_winter_2025.ui.api_tracks.ApiTracksFragment"
         android:label="@string/api_screen"
         tools:layout="@layout/fragment_recycler_view" />
 </navigation>

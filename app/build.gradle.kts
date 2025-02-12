@@ -40,11 +40,19 @@ android {
 }
 
 dependencies {
+    implementation(project(":commons:ui"))
+
 
     val dagger_version = "2.51.1"
     implementation("com.google.dagger:dagger:$dagger_version")
     kapt("com.google.dagger:dagger-compiler:$dagger_version")
-    implementation(project(":commons:ui"))
+
+    val retrofit_version = "2.9.0"
+    implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.squareup.retrofit2:converter-gson:$retrofit_version")
+
+
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("androidx.activity:activity:1.9.2")

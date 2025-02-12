@@ -20,12 +20,37 @@
 
 
     </com.google.android.material.appbar.AppBarLayout>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progress_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@id/appbar"
+        />
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@id/appbar"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/progress_indicator"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+/>
+        <ImageButton
+            android:id="@+id/refresh_button"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_refresh_black_24dp"
+            android:scaleType="fitCenter"
+            android:background="?attr/selectableItemBackground"
+            android:visibility="gone"
+            android:layout_gravity="center"/>
+    </FrameLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
