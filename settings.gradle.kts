@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Avito-Tech-Winter-2025"
 include(":app")
- 
+include(":commons:ui")
