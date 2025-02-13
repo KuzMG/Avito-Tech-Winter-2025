@@ -5,8 +5,11 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
+import com.example.avito.tech.avito_tech_winter_2025.R
 import com.example.avito.tech.avito_tech_winter_2025.service.dto.model.Track
 import com.example.avito.tech.avito_tech_winter_2025.ui.api_tracks.data.Status
+import com.example.avito.tech.avito_tech_winter_2025.ui.playback_track.PlaybackTrackFragment
 import com.example.avito.tech.internship.utils.appComponent
 import com.example.avito.tech.ui.RecyclerViewFragment
 import com.example.avito.tech.ui.TrackViewHolder
@@ -67,7 +70,16 @@ class ApiTracksFragment : RecyclerViewFragment() {
             holder.binding.run {
                 Picasso.get().load(tracks[position].album.cover).into(imageView)
                 titleTextView.text = tracks[position].title
-                authorTextView.text = tracks[position].artist.name
+                artistTextView.text = tracks[position].artist.name
+                root.setOnClickListener {
+                    val bundle = Bundle().apply {
+                        putLong(PlaybackTrackFragment.ARG_ID_TRACK, 122)
+                        putParcelableArray(PlaybackTrackFragment.ARG_TRACKS, tracks.toTypedArray())
+                        putInt(PlaybackTrackFragment.ARG_POSITION, position)
+                    }
+                    root.findNavController()
+                        .navigate(R.id.playback_track_fragment,bundle)
+                }
             }
         }
     }

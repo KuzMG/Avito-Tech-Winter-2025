@@ -3,6 +3,8 @@ package com.example.avito.tech.avito_tech_winter_2025.di.module
 import androidx.lifecycle.ViewModel
 import com.example.avito.tech.avito_tech_winter_2025.ui.api_tracks.ApiTracksViewModel
 import com.example.avito.tech.avito_tech_winter_2025.ui.downloaded_tracks.DownloadedTracksViewModel
+import com.example.avito.tech.avito_tech_winter_2025.ui.playback_track.PlaybackTrackFragment
+import com.example.avito.tech.avito_tech_winter_2025.ui.playback_track.PlaybackTracksViewModel
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module
@@ -16,6 +18,7 @@ interface ViewModelModule {
 
     @[Binds IntoMap ViewModelKey(ApiTracksViewModel::class)]
     fun provideApiTracksViewModel(apiTracksViewModel: ApiTracksViewModel): ViewModel
+
 }
 
 

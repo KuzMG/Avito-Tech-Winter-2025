@@ -10,7 +10,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import com.example.avito.tech.avito_tech_winter_2025.ui.downloaded_tracks.data.Track
+import androidx.navigation.findNavController
+import com.example.avito.tech.avito_tech_winter_2025.R
+import com.example.avito.tech.avito_tech_winter_2025.service.dto.model.Track
+import com.example.avito.tech.avito_tech_winter_2025.ui.playback_track.PlaybackTrackFragment
 import com.example.avito.tech.internship.utils.appComponent
 import com.example.avito.tech.ui.RecyclerViewFragment
 import com.example.avito.tech.ui.TrackViewHolder
@@ -80,9 +83,18 @@ class DownloadedTracksFragment : RecyclerViewFragment() {
         override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
             super.onBindViewHolder(holder, position)
             holder.binding.run {
-                Picasso.get().load(tracks[position].pic).into(imageView)
+                Picasso.get().load(tracks[position].album.cover).into(imageView)
                 titleTextView.text = tracks[position].title
-                authorTextView.text = tracks[position].author
+                artistTextView.text = tracks[position].artist.name
+                root.setOnClickListener {
+                    val bundle = Bundle().apply {
+                        putLong(PlaybackTrackFragment.ARG_ID_TRACK, 122)
+                        putParcelableArray(PlaybackTrackFragment.ARG_TRACKS, tracks.toTypedArray())
+                        putInt(PlaybackTrackFragment.ARG_POSITION, position)
+                    }
+                    root.findNavController()
+                        .navigate(R.id.playback_track_fragment,bundle)
+                }
             }
         }
     }

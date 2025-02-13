@@ -2,4 +2,6 @@
     <string name="app_name">Avito-Tech-Winter-2025</string>
     <string name="downloads_screen">Скачанные</string>
     <string name="api_screen">API</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="album">Альбом \"%1s\"</string>
 </resources>

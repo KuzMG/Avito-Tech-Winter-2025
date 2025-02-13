@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/ic_play_pause_background"/>
+    <item android:drawable="@drawable/ic_pause_24dp" android:gravity="center" android:width="50dp" android:height="50dp"/>
+
+</layer-list>
