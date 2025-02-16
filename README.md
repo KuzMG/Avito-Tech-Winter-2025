@@ -1,24 +1,29 @@
 # Avito-Tech-Winter-2025
 # Инструкция по запуску
 ## Разрешение 
-Предоставьте доступ к хранилищу, чтобы воспроизводить скачанные треки.
+Предоставьте доступ к хранилищу и к уведомлениям.
 
 ## Поиск
-![image](https://github.com/user-attachments/assets/b3a10082-ee04-4dc6-b2d9-a24dd2fc4847)
+
+![Слой 1](https://github.com/user-attachments/assets/8991f728-270c-4e9d-8648-a96d627150d1)
+
 
 Чтобы искать нужные треки, нажмите на лупу, находящуюся на тулбаре и введите название трека.
-![image](https://github.com/user-attachments/assets/81d6866a-0692-4a2e-9be1-5cc31dbdfb3b)
+
+![Слой 2](https://github.com/user-attachments/assets/093b27dd-a09f-4580-a706-3bd45d642477)
 
 Чтобы стереть запрос, нажмите на крестик или сотрите вручную.
-![image](https://github.com/user-attachments/assets/7d09046b-526b-459b-ad84-18555330a038)
 
 ## Повторный запрос к апи
-Чтобы повторить запрос при плохом интернет соединении, нажмите на кнопку посередине экрана.
-![image](https://github.com/user-attachments/assets/f7aeec4f-1c34-4f18-bed0-a7d14ea6c232)
+Чтобы повторить запрос при плохом интернет соединении, нажмите на кнопку посередине экрана во вкладке API.
+
+![Слой 3](https://github.com/user-attachments/assets/70ed10e0-6ef2-4462-9eae-2d05749a0902)
 
 
 ## Экран плеера
-![image](https://github.com/user-attachments/assets/7dc7f0df-d8a2-4a40-9ab1-6fcbbc43ba26)
+
+![Слой 4](https://github.com/user-attachments/assets/2b352f05-4f35-4ec3-bc85-f105187ca0dd)
+
 
 Чтобы открыть экран плеера нажмите на нужный трек.
 
@@ -34,6 +39,5 @@
 
 При отключении интернет соединения, трек из API может перестать воспроизводиться, после чего нельзя будет поменять трек. Для воспроизведения и смены треков восстановите интернет соединение.
 
-![screenshots](https://github.com/user-attachments/assets/39c8c7fa-65bf-4eea-855c-32af5435c972)
 
 
