@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.example.avito.tech.avito_tech_winter_2025.R
-import com.example.avito.tech.avito_tech_winter_2025.service.dto.model.Track
+import com.example.avito.tech.avito_tech_winter_2025.api.dto.model.Track
 import com.example.avito.tech.avito_tech_winter_2025.ui.playback_track.PlaybackTrackFragment
 import com.example.avito.tech.internship.utils.appComponent
 import com.example.avito.tech.ui.RecyclerViewFragment
@@ -83,7 +83,7 @@ class DownloadedTracksFragment : RecyclerViewFragment() {
         override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
             super.onBindViewHolder(holder, position)
             holder.binding.run {
-                Picasso.get().load(tracks[position].album.cover).into(imageView)
+                Picasso.get().load(tracks[position].album.cover).placeholder(R.drawable.default_track).into(imageView)
                 titleTextView.text = tracks[position].title
                 artistTextView.text = tracks[position].artist.name
                 root.setOnClickListener {
@@ -91,6 +91,7 @@ class DownloadedTracksFragment : RecyclerViewFragment() {
                         putLong(PlaybackTrackFragment.ARG_ID_TRACK, 122)
                         putParcelableArray(PlaybackTrackFragment.ARG_TRACKS, tracks.toTypedArray())
                         putInt(PlaybackTrackFragment.ARG_POSITION, position)
+                        putBoolean(PlaybackTrackFragment.ARG_INTERNET,false)
                     }
                     root.findNavController()
                         .navigate(R.id.playback_track_fragment,bundle)

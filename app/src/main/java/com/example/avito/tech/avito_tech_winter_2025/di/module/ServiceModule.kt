@@ -1,6 +1,6 @@
 package com.example.avito.tech.avito_tech_winter_2025.di.module
 
-import com.example.avito.tech.avito_tech_winter_2025.service.api.AvitoApi
+import com.example.avito.tech.avito_tech_winter_2025.api.AvitoApi
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient

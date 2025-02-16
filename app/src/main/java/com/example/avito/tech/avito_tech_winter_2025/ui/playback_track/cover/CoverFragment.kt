@@ -31,7 +31,7 @@ class CoverFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Picasso.get().load(cover).into(binding.imageView)
+        Picasso.get().load(cover).placeholder(R.drawable.default_track).into(binding.imageView)
     }
     companion object {
         @JvmStatic

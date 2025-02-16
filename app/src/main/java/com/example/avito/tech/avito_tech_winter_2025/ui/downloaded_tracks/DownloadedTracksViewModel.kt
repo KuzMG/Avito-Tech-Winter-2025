@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import com.example.avito.tech.avito_tech_winter_2025.repository.LocalRepository
-import com.example.avito.tech.avito_tech_winter_2025.service.dto.model.Track
+import com.example.avito.tech.avito_tech_winter_2025.api.dto.model.Track
 import javax.inject.Inject
 
 class DownloadedTracksViewModel @Inject constructor(localRepository: LocalRepository) :

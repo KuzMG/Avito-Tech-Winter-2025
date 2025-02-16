@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import com.example.avito.tech.avito_tech_winter_2025.AvitoTechWinter2025App
 import com.example.avito.tech.avito_tech_winter_2025.di.AppComponent
 import java.util.ArrayList
+import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 
 val Context.appComponent: AppComponent
@@ -33,4 +35,9 @@ inline fun <reified T : Parcelable>Bundle.getParcelableArrayCompat(key:String): 
     } else ({
         getParcelableArray(key)
     }) as Array<T>?
+}
+fun millisecondFormat(milliseconds: Long): String{
+    val minutes = TimeUnit.MILLISECONDS.toMinutes(milliseconds)
+    val seconds = TimeUnit.MILLISECONDS.toSeconds(milliseconds)
+    return String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds-minutes*60)
 }

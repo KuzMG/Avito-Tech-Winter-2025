@@ -1,4 +1,4 @@
-package com.example.avito.tech.avito_tech_winter_2025.service.dto.model
+package com.example.avito.tech.avito_tech_winter_2025.api.dto.model
 
 import android.os.Parcel
 import android.os.Parcelable

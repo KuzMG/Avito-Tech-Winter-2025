@@ -1,6 +1,6 @@
 package com.example.avito.tech.avito_tech_winter_2025.repository
 
-import com.example.avito.tech.avito_tech_winter_2025.service.api.AvitoApi
+import com.example.avito.tech.avito_tech_winter_2025.api.AvitoApi
 import com.example.avito.tech.avito_tech_winter_2025.ui.api_tracks.data.Result
 import com.example.avito.tech.avito_tech_winter_2025.ui.api_tracks.data.Status
 import javax.inject.Inject

@@ -1,6 +1,6 @@
 package com.example.avito.tech.avito_tech_winter_2025.ui.api_tracks.data
 
-import com.example.avito.tech.avito_tech_winter_2025.service.dto.model.Track
+import com.example.avito.tech.avito_tech_winter_2025.api.dto.model.Track
 
 data class Result(
     val status: Status,

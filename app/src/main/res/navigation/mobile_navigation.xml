@@ -22,16 +22,21 @@
         android:name="com.example.avito.tech.avito_tech_winter_2025.ui.playback_track.PlaybackTrackFragment"
         android:label="fragment_playback_track"
         tools:layout="@layout/fragment_playback_track" >
+
         <argument
             android:name="id"
             app:argType="long"
             android:defaultValue="0L" />
         <argument
             android:name="tracks"
-            app:argType="com.example.avito.tech.avito_tech_winter_2025.service.dto.model.Track[]" />
+            app:argType="com.example.avito.tech.avito_tech_winter_2025.api.dto.model.Track[]" />
         <argument
             android:name="position"
             app:argType="integer"
             android:defaultValue="0" />
+        <argument
+            android:name="isInternet"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
 </navigation>

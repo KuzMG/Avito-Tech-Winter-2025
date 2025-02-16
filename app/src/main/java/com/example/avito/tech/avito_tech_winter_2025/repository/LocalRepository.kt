@@ -4,9 +4,9 @@ import android.app.Application
 import android.content.ContentUris
 import android.net.Uri
 import android.provider.MediaStore
-import com.example.avito.tech.avito_tech_winter_2025.service.dto.model.Album
-import com.example.avito.tech.avito_tech_winter_2025.service.dto.model.Artist
-import com.example.avito.tech.avito_tech_winter_2025.service.dto.model.Track
+import com.example.avito.tech.avito_tech_winter_2025.api.dto.model.Album
+import com.example.avito.tech.avito_tech_winter_2025.api.dto.model.Artist
+import com.example.avito.tech.avito_tech_winter_2025.api.dto.model.Track
 import javax.inject.Inject
 
 class LocalRepository @Inject constructor(private val app: Application) {
@@ -14,6 +14,7 @@ class LocalRepository @Inject constructor(private val app: Application) {
     fun loadAudio(): List<Track> {
         val projection =
             arrayOf(
+                MediaStore.Audio.Media.DATA,
                 MediaStore.Audio.ArtistColumns.ARTIST,
                 MediaStore.Audio.Media.TITLE,
                 MediaStore.Audio.Media.ALBUM_ID,
@@ -30,6 +31,8 @@ class LocalRepository @Inject constructor(private val app: Application) {
         cursor?.use {
             it.run {
                 while (moveToNext()) {
+                    val data =
+                        getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA))
                     val title =
                         getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE))
                     val artist =
@@ -40,7 +43,8 @@ class LocalRepository @Inject constructor(private val app: Application) {
                         getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM_ID))
                     val albumArtUri = Uri.parse("content://media/external/audio/albumart")
                     val uri = ContentUris.withAppendedId(albumArtUri, albumId).toString()
-                    tracks.add(Track(title, uri, Artist(artist), Album(uri,albumTitle)))
+
+                    tracks.add(Track(title, data, Artist(artist), Album(uri,albumTitle)))
                 }
             }
         }

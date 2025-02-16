@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.example.avito.tech.avito_tech_winter_2025"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.avito.tech.avito_tech_winter_2025"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -41,7 +41,10 @@ android {
 
 dependencies {
     implementation(project(":commons:ui"))
-
+    implementation("androidx.media3:media3-session:1.5.1")
+    implementation("androidx.media3:media3-exoplayer:1.5.1")
+    implementation("androidx.media3:media3-ui:1.5.1")
+    implementation("androidx.media3:media3-common:1.5.1")
 
     val dagger_version = "2.51.1"
     implementation("com.google.dagger:dagger:$dagger_version")
@@ -52,9 +55,9 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.squareup.retrofit2:converter-gson:$retrofit_version")
 
-
-    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
-    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+    val nav_version = "2.8.6"
+    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
 
     implementation("com.squareup.picasso:picasso:2.8")
 
@@ -65,8 +68,6 @@ dependencies {
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.7.0")
-    implementation("androidx.activity:activity:1.9.2")
-    implementation("androidx.fragment:fragment:1.8.4")
 
 
 
