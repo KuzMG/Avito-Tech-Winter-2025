@@ -13,8 +13,7 @@ import kotlin.reflect.KClass
 
 @Module
 interface ViewModelModule {
-    @[Binds IntoMap ViewModelKey(DownloadedTracksViewModel::class)]
-    fun provideDownloadedTracksViewModel(downloadedTracksViewModel: DownloadedTracksViewModel): ViewModel
+
 
     @[Binds IntoMap ViewModelKey(ApiTracksViewModel::class)]
     fun provideApiTracksViewModel(apiTracksViewModel: ApiTracksViewModel): ViewModel

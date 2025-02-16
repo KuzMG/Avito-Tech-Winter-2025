@@ -5,6 +5,8 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
@@ -21,15 +23,13 @@ import com.example.avito.tech.ui.TracksAdapter
 import com.squareup.picasso.Picasso
 
 class DownloadedTracksFragment : RecyclerViewFragment() {
-    private val viewModel by viewModels<DownloadedTracksViewModel>() {
-        appComponent.multiViewModelFactory
-    }
+    private val viewModel by viewModels<DownloadedTracksViewModel>()
     private val requestPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
             if (isGranted) {
-                getTracks()
+                    getTracks()
             }
         }
 
@@ -49,6 +49,9 @@ class DownloadedTracksFragment : RecyclerViewFragment() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,6 +59,7 @@ class DownloadedTracksFragment : RecyclerViewFragment() {
     }
 
     private fun getTracks() {
+        viewModel.load(requireContext())
         viewModel.tracksLiveData.observe(viewLifecycleOwner) {
             binding.recyclerView.adapter =
                 DownloadedTrackAdapter(it)

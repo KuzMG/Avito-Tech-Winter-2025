@@ -1,9 +1,12 @@
 package com.example.avito.tech.avito_tech_winter_2025.ui.playback_track
 
+import android.Manifest
 import android.app.NotificationManager
 import android.content.Context
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.net.ConnectivityManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,6 +14,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.media3.common.Player
@@ -162,9 +167,29 @@ class PlaybackTrackFragment : Fragment() {
         binding = FragmentPlaybackTrackBinding.inflate(inflater, container, false)
         return binding.root
     }
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (!isGranted) {
+            }
+        }
+    private fun checkPermission() {
+        val notifPermission = Manifest.permission.POST_NOTIFICATIONS
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                notifPermission
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermissionLauncher.launch(notifPermission)
+        }
+
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        checkPermission()
+
         binding.viewPager?.run {
             offscreenPageLimit = 1
             setPadding(95, 0, 95, 0)
