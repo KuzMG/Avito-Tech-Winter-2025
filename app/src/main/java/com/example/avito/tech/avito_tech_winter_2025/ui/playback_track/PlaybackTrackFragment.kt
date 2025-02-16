@@ -1,8 +1,7 @@
 package com.example.avito.tech.avito_tech_winter_2025.ui.playback_track
 
-import android.content.BroadcastReceiver
+import android.app.NotificationManager
 import android.content.Context
-import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Bundle
@@ -14,8 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.media3.common.MediaMetadata
-import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.common.Tracks
 import androidx.media3.exoplayer.ExoPlayer
@@ -24,7 +21,10 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.example.avito.tech.avito_tech_winter_2025.R
 import com.example.avito.tech.avito_tech_winter_2025.databinding.FragmentPlaybackTrackBinding
+import com.example.avito.tech.avito_tech_winter_2025.notification.NotificationHelper
 import com.example.avito.tech.avito_tech_winter_2025.page_transformer.ZoomOutPageTransformer
+import com.example.avito.tech.avito_tech_winter_2025.receiver.InternetReceiver
+import com.example.avito.tech.avito_tech_winter_2025.receiver.PlayerManager
 import com.example.avito.tech.avito_tech_winter_2025.ui.playback_track.cover.CoverFragment
 import com.example.avito.tech.internship.utils.appComponent
 import com.example.avito.tech.internship.utils.getParcelableArrayCompat
@@ -139,52 +139,20 @@ class PlaybackTrackFragment : Fragment() {
                 Log.d("TAG", "events ${events.get(i)}")
             Log.d("TAG", "______")
         }
+
         override fun onTracksChanged(tracks: Tracks) {
             super.onTracksChanged(tracks)
             visibilityTrack(player.currentMediaItemIndex)
         }
     }
 
-    private val broadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(p0: Context, p1: Intent) {
-            if (viewModel.isInternet) {
-                val connectivityManager =
-                    p0.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-                val activeNetwork = connectivityManager.activeNetworkInfo
-                val isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting
-                Log.d("TAG", "onReceive $isConnected")
-                if (isConnected) {
-                    binding.nextButtom.isEnabled = true
-                    binding.prevButtom.isEnabled = true
-                    binding.viewPager?.isEnabled = true
-                    binding.viewPager?.isUserInputEnabled = true
-                    binding.internetExceptionTextView.visibility = View.GONE
+    private lateinit var internetReceiver: InternetReceiver
 
-                    if (!player.isPlaying ) {
-                        player.prepare()
-                        player.playWhenReady = viewModel.isPlaying
-                        Log.d("TAG", "onReceive viewModel connection ${viewModel.isPlaying}")
-
-                    }
-                } else {
-                    Log.d("TAG", "onReceive player notConnection ${player.isPlaying}")
-                    binding.internetExceptionTextView.visibility = View.VISIBLE
-                    viewModel.isPlaying = player.isPlaying
-                    binding.nextButtom.isEnabled = false
-                    binding.prevButtom.isEnabled = false
-                    binding.viewPager?.isUserInputEnabled = false
-                }
-            }
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initializeMediaPlayer()
-        requireActivity().registerReceiver(
-            broadcastReceiver,
-            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
-        )
+        requireActivity().findViewById<BottomNavigationView>(R.id.nav_view).visibility = View.GONE
     }
 
     override fun onCreateView(
@@ -197,8 +165,6 @@ class PlaybackTrackFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().findViewById<BottomNavigationView>(R.id.nav_view).visibility =
-            View.GONE
         binding.viewPager?.run {
             offscreenPageLimit = 1
             setPadding(95, 0, 95, 0)
@@ -229,24 +195,42 @@ class PlaybackTrackFragment : Fragment() {
             nextButtom.setOnClickListener {
                 player.seekToNext()
             }
-            visibilityTrack(player.currentMediaItemIndex)
-
+            visibilityTrack(viewModel.position)
         }
-
-
-
         player.setMediaItems(viewModel.mediaItems)
         player.prepare()
         player.seekToDefaultPosition(viewModel.position)
         Log.d("TAG", "trackPosition ${viewModel.trackPosition} duration ${player.duration}")
-
         player.seekTo(viewModel.trackPosition)
         Log.d(
             "TAG",
             " play - ${viewModel.isPlaying},playPauseButton.isChecked ${binding.playPauseButton.isChecked}"
         )
+        registerReceiver()
+        createNotification()
+    }
+
+    private fun createNotification() {
+        val notification = NotificationHelper.createNotification(requireContext())
+        val nf =
+            requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        nf.notify(NotificationHelper.NOTIFICATION_ID, notification)
+    }
+
+    private fun registerReceiver() {
+        PlayerManager.player = player
+        internetReceiver = InternetReceiver(player, binding, viewModel)
+        requireActivity().registerReceiver(
+            internetReceiver,
+            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        )
 
 
+    }
+
+    private fun unregisterReceiver() {
+        PlayerManager.player = null
+        requireActivity().unregisterReceiver(internetReceiver)
     }
 
     override fun onStart() {
@@ -263,7 +247,7 @@ class PlaybackTrackFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        requireActivity().unregisterReceiver(broadcastReceiver)
+        unregisterReceiver()
         requireActivity().findViewById<BottomNavigationView>(R.id.nav_view).visibility =
             View.VISIBLE
         viewModel.isPlaying = player.isPlaying
@@ -291,7 +275,8 @@ class PlaybackTrackFragment : Fragment() {
             binding.albumTextView.text = getString(R.string.album, album.title)
 
             binding.imageView?.let {
-                Picasso.get().load(album.cover).placeholder(R.drawable.default_track).into(binding.imageView)
+                Picasso.get().load(album.cover).placeholder(R.drawable.default_track)
+                    .into(binding.imageView)
 
             }
         }
@@ -306,15 +291,13 @@ class PlaybackTrackFragment : Fragment() {
         Log.d("TAG", "visibilityTrack duration ${player.duration}")
         viewModel.position = position
         if (binding.playPauseButton.isChecked == viewModel.isPlaying) {
-            if(viewModel.isPlaying)
+            if (viewModel.isPlaying)
                 player.play()
             else
                 player.pause()
         } else {
             binding.playPauseButton.isChecked = viewModel.isPlaying
         }
-
-
 
 
     }
